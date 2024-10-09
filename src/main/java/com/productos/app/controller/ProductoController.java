@@ -14,7 +14,7 @@ import com.productos.app.entity.ProductoEntity;
 import com.productos.app.service.ProductoService;
 
 @RestController
-@RequestMapping("/productos")
+@RequestMapping("/api")
 public class ProductoController {
 	
 	private final ProductoService service;
@@ -23,13 +23,13 @@ public class ProductoController {
 		this.service = service;
 	}
 	
-	@GetMapping("/listar")
+	@GetMapping("/productos/listar")
 	public List<ProductoEntity> listProductos(){
 		return service.findAll();
 		
 	}
 	
-	@GetMapping("/listar/{id}")
+	@GetMapping("/productos/listar/{id}")
 	public ResponseEntity<ProductoEntity> listarProductoId(@PathVariable Long id) {
 		if(service.findById(id).isPresent()) {
 			return new ResponseEntity<>(service.findById(id).orElse(null), HttpStatus.OK);
