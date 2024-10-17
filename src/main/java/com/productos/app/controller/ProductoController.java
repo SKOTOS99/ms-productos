@@ -1,6 +1,7 @@
 package com.productos.app.controller;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +31,13 @@ public class ProductoController {
 	}
 	
 	@GetMapping("/productos/listar/{id}")
-	public ResponseEntity<ProductoEntity> listarProductoId(@PathVariable Long id) {
+	public ResponseEntity<ProductoEntity> listarProductoId(@PathVariable Long id) throws InterruptedException {
+		if(id==11) {
+			throw new IllegalStateException("producto no encontrado");
+		}
+		if(id==7) {
+			TimeUnit.SECONDS.sleep(5L);
+		}
 		if(service.findById(id).isPresent()) {
 			return new ResponseEntity<>(service.findById(id).orElse(null), HttpStatus.OK);
 		}
